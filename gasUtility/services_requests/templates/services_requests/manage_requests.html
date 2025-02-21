@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Manage All Service Requests</h2>
+<ul>
+    {% for req in requests %}
+        <li>
+            <strong>{{ req.customer.username }}</strong> - 
+            {{ req.get_request_type_display }} - 
+            Status: {{ req.status }} - 
+            Submitted: {{ req.created_at|date:"SHORT_DATETIME_FORMAT" }}
+        </li>
+    {% empty %}
+        <li>No service requests found.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

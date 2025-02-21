@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gas Utility Services</title>
+</head>
+<body>
+    <header>
+        <h1>Gas Utility Services</h1>
+        <nav>
+            <a href="{% url 'submit_request' %}">Submit Request</a> |
+            <a href="{% url 'request_list' %}">My Requests</a>
+            {% if user.is_staff %}
+                | <a href="{% url 'manage_requests' %}">Manage Requests</a>
+            {% endif %}
+        </nav>
+        <hr>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
