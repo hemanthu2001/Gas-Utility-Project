@@ -17,10 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from services_requests.views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('submit/', submit_list, name='submit_list'),
+    path('submit/', submit_request, name='submit_request'),
     path('request_list/', request_list, name='request_list'),
     path('manage_requests/', manage_requests, name='manage_requests'),
+    path('register/', register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='services_requests/login.html'), name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('', home, name='home'),
 ]

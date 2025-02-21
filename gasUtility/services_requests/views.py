@@ -1,12 +1,34 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from .forms import ServiceRequestForm
 from .models import ServiceRequest
 
 
+def home(request):
+    return render(request, 'services_requests/home.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('submit_request')
+    else:
+        form = UserCreationForm()
+    return render(request, 'services_requests/register.html', {'form': form})
+
+
 @login_required
-def submit_list(request):
+def submit_request(request):
     if request.method == 'POST':
         form = ServiceRequestForm(request.POST, request.FILES)
         if form.is_valid():
@@ -17,7 +39,7 @@ def submit_list(request):
     else:
         form = ServiceRequestForm()
 
-    return render(request, 'services_requests/request_list.html', {'form': form})
+    return render(request, 'services_requests/submit_request.html', {'form': form})
 
 
 @login_required

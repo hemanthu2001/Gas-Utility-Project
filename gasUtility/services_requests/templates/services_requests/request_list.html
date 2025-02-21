@@ -1,10 +1,9 @@
-{% extends "base.html" %}
+{% extends "services_requests/home.html" %}
 {% block content %}
 <h2>Your Service Requests</h2>
 <ul>
     {% for req in requests %}
         <li>
-            <a href="{% url 'request_detail' req.pk %}">
                 {{ req.get_request_type_display }} 
             </a>
             - Status: {{ req.status }} - Submitted: {{ req.created_at|date:"SHORT_DATETIME_FORMAT" }}
